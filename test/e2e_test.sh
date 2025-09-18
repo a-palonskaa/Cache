@@ -19,11 +19,11 @@ declare -a belady_tests=(
 )
 
 run_tests() {
-    local binary=$1
-    local name=$2
+    binary=$1
+    name=$2
     shift 2
-    local tests=("$@")
-    local successful=true
+    tests=("$@")
+    successful=true
 
     for test in "${tests[@]}"; do
         IFS=':' read -r input expected_output <<< "$test"
