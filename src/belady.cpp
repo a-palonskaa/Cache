@@ -30,15 +30,11 @@ int main() {
         v.push_back(elem);
     }
 
-    belady_cache_t<int, int> c{cap, v};
+    belady_cache_t<int, int> c{cap, v, slow_get_page_int};
 
     for (auto& elem : v) {
-        hits += c.lookup_update(elem, slow_get_page_int);
+        hits += c.lookup_update(elem);
     }
 
-    std::cout << "this shit works " << hits << '\n';
-    if (!std::cin.good()) {
-        std::cerr << "failed to write hits to cout\n";
-        return EXIT_FAILURE;
-    }
+    std::cout << hits << '\n';
 }

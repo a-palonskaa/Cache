@@ -15,7 +15,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    two_q_cache_t<int, int> c{cap};
+    two_q_cache_t<int, int> c{cap, slow_get_page_int};
 
     for (size_t i = 0; i < elem_amount; i++) {
         size_t elem;
@@ -25,13 +25,8 @@ int main() {
             return EXIT_FAILURE;
         }
 
-        hits += c.lookup_update(elem, slow_get_page_int);
-        std::cout <<hits<<'\n';
+        hits += c.lookup_update(elem);
     }
 
-    std::cout << "god bless " << hits << '\n';
-    if (!std::cin.good()) {
-        std::cerr << "failed to write hits to cout\n";
-        return EXIT_FAILURE;
-    }
+    std::cout << hits << '\n';
 }
