@@ -1,4 +1,3 @@
-#include <cassert>
 #include <iostream>
 
 #include "two_q_cache.hpp"
