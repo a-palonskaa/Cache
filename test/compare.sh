@@ -31,6 +31,7 @@ run_compare() {
         output_belady=$(echo "$result" | head -n 1)
         belady_time=$(echo "$result" | awk '/real/ {print $2}')
 
+        echo "[$testfile]"
         echo "[BELADY] hits: $output_belady time: $belady_time"
         echo "[2Q]     hits: $output_twoq time: $twoq_time"
     done

@@ -16,19 +16,15 @@ public:
     using FuncT = std::function<ElemT(KeyT)>;
 
     belady_cache_t(size_t size, std::vector<ElemT> elements, FuncT slow_get_page) :
-        size_(size), elements_(std::move(elements)), slow_get_page_(std::move(slow_get_page)) {
-        for (size_t i = 0; i < elements_.size(); ++i) {
-            occurance_table_[elements_[i]].push(i);
-        }
-
-        for (auto& [key, queue] : occurance_table_) {
-            queue.push(inf);
+        size_(size), slow_get_page_(std::move(slow_get_page)) {
+        occurance_table_.reserve(elements.size());
+        for (size_t i = 0; i < elements.size(); ++i) {
+            occurance_table_[elements[i]].push(i);
         }
     }
 
     bool lookup_update(const KeyT& elem_key) {
         occurance_table_[elem_key].pop();
-        size_t next_key_use = occurance_table_[elem_key].front();
 
         if (storage_.contains(elem_key)) {
             return true;
@@ -39,25 +35,26 @@ public:
             return false;
         }
 
-        if (next_key_use == inf) {
+        if (occurance_table_[elem_key].empty()) {
             return false;
         }
 
         KeyT farthest_key{};
         size_t farthest_pos = 0;
-        for (auto& [key, elem] : storage_) {
-            auto next_use = occurance_table_[key].front();
-            if (next_use == inf) {
-                farthest_key =  key;
-                farthest_pos = inf;
+        for (auto& [key, _] : storage_) {
+            if (occurance_table_[key].empty()) {
+                farthest_key = key;
                 break;
-            } else if (next_use > farthest_pos) {
-                farthest_pos = next_use;
+            }
+
+            auto next_key_use = occurance_table_[key].front();
+            if (next_key_use > farthest_pos) {
+                farthest_pos = next_key_use;
                 farthest_key = key;
             }
         }
 
-        if (next_key_use > farthest_pos) {
+        if (occurance_table_[elem_key].front() > farthest_pos) {
             return false;
         }
 
@@ -70,5 +67,4 @@ private:
     size_t size_;
     std::unordered_map<KeyT, ElemT> storage_;
     std::unordered_map<KeyT, std::queue<size_t>> occurance_table_;
-    std::vector<ElemT> elements_;
 };
