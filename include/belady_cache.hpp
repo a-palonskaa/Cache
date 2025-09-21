@@ -4,11 +4,8 @@
 #include <unordered_map>
 #include <queue>
 #include <utility>
-#include <algorithm>
 #include <iterator>
 #include <functional>
-
-inline constexpr size_t inf = std::numeric_limits<size_t>::max();
 
 template <typename KeyT, typename ElemT>
 class belady_cache_t {
@@ -17,7 +14,6 @@ public:
 
     belady_cache_t(size_t size, std::vector<ElemT> elements, FuncT slow_get_page) :
         size_(size), slow_get_page_(std::move(slow_get_page)) {
-        occurance_table_.reserve(elements.size());
         for (size_t i = 0; i < elements.size(); ++i) {
             occurance_table_[elements[i]].push(i);
         }
