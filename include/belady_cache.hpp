@@ -6,13 +6,14 @@
 #include <utility>
 #include <iterator>
 #include <functional>
+#include <iostream>
 
 template <typename KeyT, typename ElemT>
 class belady_cache_t {
 public:
     using FuncT = std::function<ElemT(KeyT)>;
 
-    belady_cache_t(size_t size, std::vector<ElemT> elements, FuncT slow_get_page) :
+    belady_cache_t(size_t size, std::vector<KeyT> elements, FuncT slow_get_page) :
         size_(size), slow_get_page_(std::move(slow_get_page)) {
         for (size_t i = 0; i < elements.size(); ++i) {
             occurance_table_[elements[i]].push(i);
