@@ -25,8 +25,10 @@ cmake --build ./build
 ./build/2q
 ```
 
-## To run tests
-[note:] test scripts (.sh) work on Unix-like systems.
+# To run tests
+
+> **Note:** Test scripts (`.sh`) work on Unix-like systems.
+
 
 ## Before running tests
 ```bash
@@ -34,13 +36,13 @@ chmod +x ./test/compare.sh
 chmod +x ./test/e2e_test.sh
 ```
 
-## To run comparison on small data
+## To run comparison on small generated data sets
 
 ```bash
 ./test/compare.sh generated
 ```
 
-## To run comparison on big data with time measurement
+## To run comparison on big data sets(.dat in test/tesfiles) with time measurement
 
 ```bash
 ./test/compare.sh
@@ -52,7 +54,7 @@ chmod +x ./test/e2e_test.sh
 ./test/e2e_test.sh
 ```
 
-## Input|output Format
+## Input&Output Format
 input:
 ```
 <cache cap> <requests amount> <r1> <r2> <r3> ... <rm>
@@ -62,7 +64,7 @@ output:
 <number of hits>
 ```
 
-# Ideal to 2Q caching comparisson
+# Belady VS 2Q
 
 2Q VS Belady algorithm on 100 randomly generated tests(requests amount from cap to 6×cap).
 - Capacity 4–23:

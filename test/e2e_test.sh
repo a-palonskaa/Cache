@@ -41,6 +41,8 @@ run_tests() {
 
     if $successful; then
         echo "[$name] TESTS ARE PASSED"
+    else
+        exit 1
     fi
 }
 
