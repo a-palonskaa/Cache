@@ -44,7 +44,5 @@ run_tests() {
     fi
 }
 
-cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
-cmake --build ./build
 run_tests ./build/2q 2q "${twoq_tests[@]}"
 run_tests ./build/belady belady "${belady_tests[@]}"

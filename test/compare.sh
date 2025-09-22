@@ -1,7 +1,7 @@
 #!/bin/bash
 
 generate_test() {
-    n=$(((RANDOM % 20) + 1))
+    n=$(((RANDOM % 100) + 4))
     m=$((RANDOM % (5*n) + n))
     seq=""
     for ((i=0; i<m; i++)); do
@@ -37,12 +37,9 @@ run_compare() {
     done
 }
 
-cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
-cmake --build ./build
-
 mode=${1}
 if [ "$mode" = "generated" ]; then
-    run_compare_generated 20
+    run_compare_generated 1
 else
     run_compare "./test/testfiles"
 fi

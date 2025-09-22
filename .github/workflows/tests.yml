@@ -20,13 +20,13 @@ jobs:
      uses: actions/checkout@v4
 
    - name: Install dependencies
-         run: |
-           apt-get update
-           apt-get install -y \
-             build-essential \
-             cmake \
-             valgrind \
-             git
+     run: |
+      apt-get update
+      apt-get install -y \
+       build-essential \
+       cmake \
+       valgrind \
+       git
 
    - name: Configure
      run: |
@@ -34,9 +34,13 @@ jobs:
 
    - name: Build
      run: |
-      cmake --build build --target 2q
+      cmake --build build
 
    - name: Run tests under Valgrind
      run: |
-      cd build
-      valgrind --leak-check=full ./2q
+      valgrind --leak-check=full ./build/2q < ./test/testfiles/014.dat
+      valgrind --leak-check=full ./build/belady < ./test/testfiles/014.dat
+   - name: Run end-to-end tests
+     run: |
+      chmod +x ./test/e2e_test.sh
+      ./test/e2e_test.sh

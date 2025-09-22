@@ -64,8 +64,8 @@ private:
             a_out_pos_.emplace(elem_key, a_out_storage_.begin());
 
             if (a_out_storage_.size() >= a_out_size_) {
-                a_out_storage_.pop_back();
                 a_out_pos_.erase(a_out_storage_.back());
+                a_out_storage_.pop_back();
             }
         }
         a_in_storage_.emplace_front(key, page);
@@ -74,8 +74,8 @@ private:
 
     void insert_to_a_m(const KeyT& key, const ElemT& page) {
         if (a_m_storage_.size() == a_m_size_) {
-            a_m_storage_.pop_back();
             a_m_pos_.erase(a_m_storage_.back().first);
+            a_m_storage_.pop_back();
         }
         a_m_storage_.emplace_front(key, page);
         a_m_pos_.emplace(key, a_m_storage_.begin());
