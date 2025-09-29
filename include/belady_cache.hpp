@@ -15,7 +15,7 @@ public:
 
     belady_cache_t(size_t size, std::vector<KeyT> elements, FuncT slow_get_page) :
         size_(size), slow_get_page_(std::move(slow_get_page)) {
-        for (size_t i = 0; i < elements.size(); ++i) {
+        for (size_t i = 0; i < elements.size(); i++) {
             occurance_table_[elements[i]].push(i);
         }
     }
@@ -38,9 +38,11 @@ public:
 
         KeyT farthest_key{};
         size_t farthest_pos = 0;
+        bool never_used = false;
         for (auto& [key, _] : storage_) {
             if (occurance_table_[key].empty()) {
                 farthest_key = key;
+                never_used = true;
                 break;
             }
 
@@ -51,12 +53,13 @@ public:
             }
         }
 
-        if (occurance_table_[elem_key].front() > farthest_pos) {
+        if (!never_used && occurance_table_[elem_key].front() > farthest_pos) {
             return false;
         }
 
         storage_.erase(farthest_key);
         storage_.emplace(elem_key, slow_get_page_(elem_key));
+
         return false;
     }
 private:
