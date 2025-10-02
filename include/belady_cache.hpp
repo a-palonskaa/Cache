@@ -27,12 +27,12 @@ public:
             return true;
         }
 
-        if (storage_.size() < size_) {
-            storage_.emplace(elem_key, slow_get_page_(elem_key));
+        if (occurance_table_[elem_key].empty()) {
             return false;
         }
 
-        if (occurance_table_[elem_key].empty()) {
+        if (storage_.size() < size_) {
+            storage_.emplace(elem_key, slow_get_page_(elem_key));
             return false;
         }
 
